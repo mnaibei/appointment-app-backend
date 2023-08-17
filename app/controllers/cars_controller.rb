@@ -1,6 +1,7 @@
 class CarsController < ApplicationController
   def index
-    @cars = Car.all
+    @user = User.find(params[:user_id])
+    @cars = @user.cars
 
     if @cars
       render json: @cars
@@ -10,7 +11,8 @@ class CarsController < ApplicationController
   end
 
   def show
-    @car = Car.find(params[:id])
+    @user = User.find(params[:user_id])
+    @car = @user.cars.find(params[:id])
 
     if @car
       render json: @car
@@ -21,9 +23,15 @@ class CarsController < ApplicationController
 
   def create
     @car = Car.create(car_params)
+    @user = User.find(params[:user_id])
+    @car.user = @user
 
     if @car.valid?
-      render json: @car
+      if @car.save
+        render json: @car
+      else
+        render json: { error: 'Unable to save car' }, status: 400
+      end
     else
       render json: { error: 'Invalid car' }, status: 400
     end
