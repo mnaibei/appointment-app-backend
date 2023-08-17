@@ -27,6 +27,12 @@ RSpec.describe "CarsController", type: :request do
       expect(cars.length).to eq(2)
     end
 
-
-end
+    it "returns an error if no cars are found" do
+        get "/users/#{user.id}/cars"
+        expect(response).to have_http_status(404)
+  
+        error_response = JSON.parse(response.body)
+        expect(error_response["error"]).to eq("No cars found")
+      end
+    end
 end
