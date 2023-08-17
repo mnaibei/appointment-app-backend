@@ -21,16 +21,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def update
-    @reservation = Reservation.find(params[:id])
-
-    if @reservation.update(reservation_params)
-      render json: @reservation
-    else
-      render json: { errors: @reservation.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
   def destroy
     @reservation = Reservation.find(params[:id])
     @reservation.destroy
@@ -42,6 +32,6 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:city, :user_id, :car_id)
+    params.require(:reservation).permit(:city, :date, :user_id, :car_id)
   end
 end
