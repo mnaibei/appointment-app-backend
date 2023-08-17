@@ -1,11 +1,13 @@
 class ReservationsController < ApplicationController
   def index
-    @reservations = Reservation.all
+    @user = User.find(params[:user_id])
+    @reservations = @user.reservations
     render json: @reservations
   end
 
   def show
-    @reservation = Reservation.find(params[:id])
+    @user = User.find(params[:user_id])
+    @reservation = @user.reservations.find(params[:id])
     render json: @reservation
   rescue ActiveRecord::RecordNotFound
     render json: { error: 'Reservation not found' }, status: :not_found
