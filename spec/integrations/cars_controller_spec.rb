@@ -61,4 +61,29 @@ RSpec.describe "CarsController", type: :request do
           expect(error_response["error"]).to eq("No car found")
         end
       end
+
+      describe "POST /users/:user_id/cars" do
+        it "creates a new car" do
+          car_params = {
+            car_model: "SUV",
+            description: "A spacious SUV",
+            photo: "suv.jpg",
+            reservation_price: 150.00
+          }
+    
+          post "/users/#{user.id}/cars", params: car_params
+          expect(response).to have_http_status(200)
+    
+          car_response = JSON.parse(response.body)
+          expect(car_response["car_model"]).to eq("SUV")
+        end
+    
+        it "returns an error if car creation fails" do
+          post "/users/#{user.id}/cars", params: { car_model: "SUV" }
+          expect(response).to have_http_status(400)
+    
+          error_response = JSON.parse(response.body)
+          expect(error_response["error"]).to eq("Unable to save car")
+        end
+      end
 end
