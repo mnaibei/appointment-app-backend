@@ -12,11 +12,10 @@ class CarsController < ApplicationController
   end
 
   def show
-    @car = @user.cars.find(params[:id])
-
-    if @car
+    begin
+      @car = @user.cars.find(params[:id])
       render json: @car
-    else
+    rescue ActiveRecord::RecordNotFound
       render json: { error: 'No car found' }, status: 404
     end
   end
