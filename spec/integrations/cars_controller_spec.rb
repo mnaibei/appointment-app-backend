@@ -35,4 +35,30 @@ RSpec.describe "CarsController", type: :request do
         expect(error_response["error"]).to eq("No cars found")
       end
     end
+
+    describe "GET /users/:user_id/cars/:id" do
+        it "returns a car by id" do
+          car = Car.create(
+            car_model: "SUV",
+            description: "A spacious SUV",
+            photo: "suv.jpg",
+            reservation_price: 150.00,
+            user: user
+          )
+    
+          get "/users/#{user.id}/cars/#{car.id}"
+          expect(response).to have_http_status(200)
+    
+          car_response = JSON.parse(response.body)
+          expect(car_response["id"]).to eq(car.id)
+        end
+    
+        it "returns an error if car is not found" do
+          get "/users/#{user.id}/cars/999"
+          expect(response).to have_http_status(404)
+    
+          error_response = JSON.parse(response.body)
+          expect(error_response["error"]).to eq("No car found")
+        end
+      end
 end
