@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :users, only: %i[index create] do
+  devise_for :users
+  resources :users, only: %i[index create destroy] do
     resources :cars, only: %i[index show create destroy] do
       resources :reservations, only: %i[index show create destroy]
     end
