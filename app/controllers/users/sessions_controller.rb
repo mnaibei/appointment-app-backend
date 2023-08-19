@@ -1,9 +1,16 @@
 class Users::SessionsController < Devise::SessionsController
+  respond_to :json
   def create
     self.resource = warden.authenticate!(auth_options)
     sign_in(resource_name, resource)
-    yield resource if block_given?
-    render json: resource
+
+    render json: { data: current_user, message: 'Logged in successfully' } if user_signed_in?
+  rescue StandardError
+    render json: { error: 'Invalid email or password' }, status: :unauthorized
+  end
+
+  def current
+    render json: { logged_in: user_signed_in? }
   end
 
   def destroy
