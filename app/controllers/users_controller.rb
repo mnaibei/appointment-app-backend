@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     if @users
       render json: @users
     else
-    # rescue ActiveRecord::RecordNotFound
+      # rescue ActiveRecord::RecordNotFound
       render json: { error: 'No users found' }, status: 404
     end
   end
@@ -33,8 +33,8 @@ class UsersController < ApplicationController
   end
 
   private
-  
-    def user_params
-      params.permit(:username, :email, :password)
-    end
+
+  def user_params
+    params.permit(:username, :email, :password)
+  end
 end
