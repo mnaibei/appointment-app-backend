@@ -7,9 +7,13 @@ class UsersController < ApplicationController
     if @users
       render json: @users
     else
-      # rescue ActiveRecord::RecordNotFound
       render json: { error: 'No users found' }, status: 404
     end
+  end
+
+  def name
+    @user_name = User.find(params[:id])
+    render json: { name: @user_name.username }
   end
 
   def create

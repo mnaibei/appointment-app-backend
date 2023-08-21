@@ -9,4 +9,6 @@ Rails.application.routes.draw do
     resources :reservations, only: %i[index show create destroy]
   end
   resources :cars, only: %i[index]
+
+  get '/users/:id/name', to: 'users#name'
 end
