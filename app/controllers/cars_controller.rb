@@ -6,7 +6,7 @@ class CarsController < ApplicationController
     # @cars = @user.cars
     @cars = Car.all
 
-    if @cars
+    if @cars.any?
       render json: @cars
     else
       rescue_from ActiveRecord::RecordNotFound do |_exception|
@@ -16,7 +16,6 @@ class CarsController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:user_id])
     @car = @user.cars.find(params[:id])
 
     if @car
@@ -27,18 +26,12 @@ class CarsController < ApplicationController
   end
 
   def create
-    @car = Car.create(car_params)
-    @user = User.find(params[:user_id])
-    @car.user = @user
+    @car = @user.cars.build(car_params)
 
-    if @car.valid?
-      if @car.save
-        render json: @car
-      else
-        render json: { error: 'Unable to save car' }, status: 400
-      end
+    if @car.save
+      render json: @car
     else
-      render json: { error: 'Invalid car' }, status: 400
+      render json: { error: 'Unable to save car' }, status: 400
     end
   end
 
@@ -54,7 +47,11 @@ class CarsController < ApplicationController
 
   private
 
+  def find_user
+    @user = User.find(params[:user_id])
+  end
+
   def car_params
-    params.permit(:car_model, :description, :photo, :reservation_price, :user_id)
+    params.permit(:car_model, :description, :photo, :reservation_price)
   end
 end
