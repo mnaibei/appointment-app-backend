@@ -17,12 +17,9 @@ class CarsController < ApplicationController
 
   def show
     @car = @user.cars.find(params[:id])
-
-    if @car
-      render json: @car
-    else
-      render json: { error: 'No car found' }, status: 404
-    end
+    render json: @car
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'No car found' }, status: 404
   end
 
   def create
