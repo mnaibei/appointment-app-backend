@@ -1,12 +1,17 @@
 class CarsController < ApplicationController
+  before_action :authenticate_devise_api_token!
+
   def index
-    @user = User.find(params[:user_id])
-    @cars = @user.cars
+    # @user = User.find(params[:user_id])
+    # @cars = @user.cars
+    @cars = Car.all
 
     if @cars
       render json: @cars
     else
-      render json: { error: 'No cars found' }, status: 404
+      rescue_from ActiveRecord::RecordNotFound do |_exception|
+        render json: { error: 'No cars found' }, status: 404
+      end
     end
   end
 

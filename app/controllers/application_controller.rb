@@ -1,11 +1,10 @@
 class ApplicationController < ActionController::API
-  before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
 
-  # customize the parameters that can be submitted during the sign-up process
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
   end
 end

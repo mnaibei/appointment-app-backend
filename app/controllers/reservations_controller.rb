@@ -1,4 +1,6 @@
 class ReservationsController < ApplicationController
+  before_action :authenticate_devise_api_token!
+
   def index
     @user = User.find(params[:user_id])
     @reservations = @user.reservations
