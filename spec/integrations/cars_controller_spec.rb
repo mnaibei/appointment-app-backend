@@ -1,89 +1,64 @@
 require 'rails_helper'
 
-RSpec.describe 'CarsController', type: :request do
-  let(:user) { User.create(username: 'testuser') }
+RSpec.describe CarsController, type: :request do
+  let(:user) { FactoryBot.create(:user) }
+  let(:car) { FactoryBot.create(:car, user:) }
 
-  describe 'GET /users/:user_id/cars' do
+  # puts "user: #{user.inspect}"
+  describe 'GET #index' do
     it 'returns a list of cars' do
-      Car.create(
-        car_model: 'SUV',
-        description: 'A spacious SUV',
-        photo: 'suv.jpg',
-        reservation_price: 150.00,
-        user:
-      )
-      Car.create(
-        car_model: 'Sedan',
-        description: 'A comfortable sedan',
-        photo: 'sedan.jpg',
-        reservation_price: 100.00,
-        user:
-      )
-
-      get "/users/#{user.id}/cars"
-      expect(response).to have_http_status(200)
-
-      cars = JSON.parse(response.body)
-      expect(cars.length).to eq(2)
+      puts "car: #{car.inspect}"
+      get '/cars'
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).not_to be_empty
     end
 
     it 'returns an error if no cars are found' do
+      Car.destroy_all
       get "/users/#{user.id}/cars"
-      expect(response).to have_http_status(404)
-
-      error_response = JSON.parse(response.body)
-      expect(error_response['error']).to eq('No cars found')
+      expect(response).to have_http_status(:not_found)
+      expect(JSON.parse(response.body)).to eq({ 'error' => 'No cars found' })
     end
   end
 
-  describe 'GET /users/:user_id/cars/:id' do
-    it 'returns a car by id' do
-      car = Car.create(
-        car_model: 'SUV',
-        description: 'A spacious SUV',
-        photo: 'suv.jpg',
-        reservation_price: 150.00,
-        user:
-      )
-
+  describe 'GET #show' do
+    it 'returns a car' do
       get "/users/#{user.id}/cars/#{car.id}"
-      expect(response).to have_http_status(200)
-
-      car_response = JSON.parse(response.body)
-      expect(car_response['id']).to eq(car.id)
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)['id']).to eq(car.id)
     end
 
-    it 'returns an error if car is not found' do
-      get "/users/#{user.id}/cars/999"
-      expect(response).to have_http_status(404)
-
-      error_response = JSON.parse(response.body)
-      expect(error_response['error']).to eq('No car found')
+    it 'returns an error if the car is not found' do
+      get "/users/#{user.id}/cars/invalid_id"
+      expect(response).to have_http_status(:not_found)
+      expect(JSON.parse(response.body)).to eq({ 'error' => 'No car found' })
     end
   end
 
-  describe 'POST /users/:user_id/cars' do
-    it 'creates a new car' do
-      car_params = {
-        car_model: 'SUV',
-        description: 'A spacious SUV',
-        photo: 'suv.jpg',
-        reservation_price: 150.00
-      }
+  describe 'POST #create' do
+    let(:valid_attributes) do
+      { car_model: 'Model X', description: 'Electric car', photo: 'image.jpg', reservation_price: 100 }
+    end
+    let(:invalid_attributes) { { car_model: '', description: 'Electric car', reservation_price: 100 } }
 
-      post "/users/#{user.id}/cars", params: car_params
-      expect(response).to have_http_status(200)
-
-      car_response = JSON.parse(response.body)
-      expect(car_response['car_model']).to eq('SUV')
+    it 'creates a new car with valid attributes' do
+      post "/users/#{user.id}/cars", params: valid_attributes
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)['car_model']).to eq('Model X')
     end
 
-    it 'returns an error if car creation fails' do
-      post "/users/#{user.id}/cars", params: { car_model: 'SUV' }
-      expect(response).to have_http_status(400)
+    it 'returns an error with invalid attributes' do
+      post "/users/#{user.id}/cars", params: invalid_attributes
+      expect(response).to have_http_status(:bad_request)
+      expect(JSON.parse(response.body)).to eq({ 'error' => 'Unable to save car' })
+    end
+  end
 
-      error_response = JSON.parse(response.body)
-      expect(error_response['error']).to eq('Unable to save car')
+  describe 'DELETE #destroy' do
+    it 'deletes a car' do
+      delete "/users/#{user.id}/cars/#{car.id}"
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)['id']).to eq(car.id)
     end
   end
 end

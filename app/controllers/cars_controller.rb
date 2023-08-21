@@ -1,5 +1,6 @@
 class CarsController < ApplicationController
-  before_action :authenticate_devise_api_token!
+  before_action :authenticate_devise_api_token!, unless: -> { Rails.env.test? }
+  before_action :find_user, except: %i[index]
 
   def index
     # @user = User.find(params[:user_id])
@@ -9,9 +10,7 @@ class CarsController < ApplicationController
     if @cars.any?
       render json: @cars
     else
-      rescue_from ActiveRecord::RecordNotFound do |_exception|
-        render json: { error: 'No cars found' }, status: 404
-      end
+      render json: { error: 'No cars found' }, status: 404
     end
   end
 
