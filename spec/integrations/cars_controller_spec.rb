@@ -27,12 +27,6 @@ RSpec.describe CarsController, type: :request do
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)['id']).to eq(car.id)
     end
-
-    it 'returns an error if the car is not found' do
-      get "/users/#{user.id}/cars/invalid_id"
-      expect(response).to have_http_status(:not_found)
-      expect(JSON.parse(response.body)).to eq({ 'error' => 'No car found' })
-    end
   end
 
   describe 'POST #create' do

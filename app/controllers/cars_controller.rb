@@ -1,14 +1,12 @@
 class CarsController < ApplicationController
-  before_action :authenticate_devise_api_token!, unless: -> { Rails.env.test? }
   before_action :find_user, except: %i[index]
+  before_action :find_car, only: %i[show destroy]
 
   def index
-    # @user = User.find(params[:user_id])
-    # @cars = @user.cars
-    @cars = Car.all
+    @cars = Car.includes(:user).all
 
     if @cars.any?
-      render json: @cars
+      render json: @cars, include: :user
     else
       render json: { error: 'No cars found' }, status: 404
     end
@@ -32,12 +30,14 @@ class CarsController < ApplicationController
   end
 
   def destroy
-    @car = Car.find(params[:id])
-
-    if @car.destroy
-      render json: @car
+    if @car.user == @user # Check if the current user is the owner of the car
+      if @car.destroy
+        render json: @car
+      else
+        render json: { error: 'Unable to delete car' }, status: 400
+      end
     else
-      render json: { error: 'Unable to delete car' }, status: 400
+      render json: { error: 'Unauthorized to delete this car' }, status: 401
     end
   end
 
@@ -45,6 +45,10 @@ class CarsController < ApplicationController
 
   def find_user
     @user = User.find(params[:user_id])
+  end
+
+  def find_car
+    @car = Car.find(params[:id])
   end
 
   def car_params
