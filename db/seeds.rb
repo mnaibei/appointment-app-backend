@@ -43,3 +43,16 @@ Reservation.create(
   user_id: 2,
   car_id: 2
 )
+
+
+
+roles = ['user', 'owner', 'renter']
+
+100.times do
+  User.create(
+    username: 'Obed',
+    email: 'obedbamfo@gmail.com',
+    encrypted_password: Devise.friendly_token,
+    role: roles.sample
+  )
+end
