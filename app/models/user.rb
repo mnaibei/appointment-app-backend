@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   validates :username, :email, presence: true
 
-  enum role: %i[user renter owner admin]
+  enum role: %i[user renter owner]
   after_initialize :set_default_role, if: :new_record?
   # set default role to user  if not set
   def set_default_role
