@@ -1,6 +1,7 @@
 class CarsController < ApplicationController
   before_action :authenticate_devise_api_token!, unless: -> { Rails.env.test? }
   before_action :find_user, except: %i[index]
+  load_and_authorize_resource
 
   def index
     # @user = User.find(params[:user_id])
@@ -23,6 +24,7 @@ class CarsController < ApplicationController
 
   def create
     @car = @user.cars.build(car_params)
+    authorize! :create, @car
 
     if @car.save
       render json: @car
@@ -33,6 +35,7 @@ class CarsController < ApplicationController
 
   def destroy
     @car = Car.find(params[:id])
+    authorize! :destroy, @car
 
     if @car.destroy
       render json: @car
