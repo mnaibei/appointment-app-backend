@@ -6,14 +6,14 @@ class Ability
     can :read, Car
 
     if user.owner?
-      can %i[create update destroy], Car
+      can %i[create destroy], Car
 
       cannot :create, Reservation
     end
 
     return unless user.renter?
 
-    can %i[create update destroy], Reservation
+    can %i[create destroy], Reservation
 
     cannot :create, Car
   end
