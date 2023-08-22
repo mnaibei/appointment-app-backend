@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
   before_action :authenticate_devise_api_token!
+  load_and_authorize_resource
 
   def index
     @user = User.find(params[:user_id])
@@ -17,7 +18,9 @@ class ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
-
+    authorize! :create, @reservation
+    authorize! :destroy, @reservation
+    
     if @reservation.save
       render json: @reservation, status: :created
     else
