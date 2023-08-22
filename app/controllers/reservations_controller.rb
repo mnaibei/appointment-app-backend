@@ -20,7 +20,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     authorize! :create, @reservation
     authorize! :destroy, @reservation
-    
+
     if @reservation.save
       render json: @reservation, status: :created
     else
