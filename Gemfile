@@ -10,6 +10,7 @@ gem 'rails', '~> 7.0.7'
 gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
+gem 'cancancan'
 gem 'devise'
 gem 'devise-api'
 gem 'puma', '~> 5.0'
