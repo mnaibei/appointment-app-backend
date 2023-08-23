@@ -1,4 +1,5 @@
 class CarsController < ApplicationController
+  before_action :authenticate_devise_api_token!, except: %i[index]
   before_action :find_user, except: %i[index]
   before_action :find_car, only: %i[show destroy]
 
@@ -52,6 +53,6 @@ class CarsController < ApplicationController
   end
 
   def car_params
-    params.permit(:car_model, :description, :photo, :reservation_price)
+    params.permit(:car_model, :description, :photo, :reservation_price, :user_id)
   end
 end
