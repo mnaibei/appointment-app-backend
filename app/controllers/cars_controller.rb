@@ -1,5 +1,5 @@
 class CarsController < ApplicationController
-  before_action :authenticate_devise_api_token!, except: %i[index], unless: -> { Rails.env.test?}
+  before_action :authenticate_devise_api_token!, except: %i[index], unless: -> { Rails.env.test? }
   before_action :find_user, except: %i[index]
   before_action :find_car, only: %i[show destroy]
 
