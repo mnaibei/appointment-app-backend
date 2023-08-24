@@ -19,17 +19,17 @@ RSpec.describe 'Reservations', type: :request do
       expect(returned_reservation['id']).to eq(reservation.id)
     end
 
-    # it 'returns http not found and an error message' do
-    #   user = User.create(username: 'John')
-    #   car = Car.create(car_model: 'Toyota Camry', user:)
-    #   non_existent_reservation_id = 12_345
+    it 'returns http not found and an error message' do
+      user = User.create(username: 'John')
+      car = Car.create(car_model: 'Toyota Camry', user:)
+      non_existent_reservation_id = 12_345
 
-    #   get "/users/#{user.id}/cars/#{car.id}/reservations/#{non_existent_reservation_id}"
+      get "/users/#{user.id}/cars/#{car.id}/reservations/#{non_existent_reservation_id}"
 
-    #   expect(response).to have_http_status(:not_found)
-    #   error_response = JSON.parse(response.body)
-    #   expect(error_response['error']).to eq('Reservation not found')
-    # end
+      expect(response).to have_http_status(:not_found)
+      error_response = JSON.parse(response.body)
+      expect(error_response['error']).to eq('Reservation not found')
+    end
   end
 end
 
