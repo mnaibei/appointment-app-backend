@@ -31,5 +31,11 @@ RSpec.describe 'Reservations', type: :request do
       expect(error_response['error']).to eq('Reservation not found')
     end
   end
-end
 
+  describe 'DELETE #destroy' do
+    it 'deletes a reservation' do
+      delete "/users/#{user.id}/cars/#{car.id}/reservations/#{reservation.id}"
+      expect(response).to have_http_status(:no_content)
+    end
+  end
+end
