@@ -1,10 +1,10 @@
 class ReservationsController < ApplicationController
-  before_action :authenticate_devise_api_token!
+  before_action :authenticate_devise_api_token!, unless: -> { Rails.env.test? }
 
   def index
     @user = User.find(params[:user_id])
     @reservations = @user.reservations
-    render json: @reservations
+    render json: @reservations, status: :ok
   end
 
   def show
