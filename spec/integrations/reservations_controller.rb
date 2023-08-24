@@ -11,13 +11,13 @@ RSpec.describe 'Reservations', type: :request do
       expect(response.status).to eq(200)
     end
 
-    # it 'returns http success and the reservation' do
-    #   get "/users/#{user.id}/cars/#{car.id}/reservations/#{reservation.id}"
+    it 'returns http success and the reservation' do
+      get "/users/#{user.id}/cars/#{car.id}/reservations/#{reservation.id}"
 
-    #   expect(response).to have_http_status(:ok)
-    #   returned_reservation = JSON.parse(response.body)
-    #   expect(returned_reservation['id']).to eq(reservation.id)
-    # end
+      expect(response).to have_http_status(:ok)
+      returned_reservation = JSON.parse(response.body)
+      expect(returned_reservation['id']).to eq(reservation.id)
+    end
 
     # it 'returns http not found and an error message' do
     #   user = User.create(username: 'John')
