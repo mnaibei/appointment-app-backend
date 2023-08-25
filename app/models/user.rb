@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :cars, dependent: :destroy
   has_many :reservations, dependent: :destroy
 
-  validates :username, :role, :email, presence: true
+  # validates :username, :role, :email, presence: true
 
   enum role: %i[user renter owner]
   # after_initialize :set_default_role, if: :new_record?
