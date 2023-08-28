@@ -50,18 +50,25 @@
 - Create API for user registration
 - Create an API for the user to be able to Log in to an existing account
 - Create an Api for the current user to be able to Sign out from a session
-- Create an API so that a user who is an owner can add a car 
-- Create an API so that a user who is a renter can rent a car 
+- Create an API so that a user who is an owner can add a car
+- Create an API so that a user who is a renter can rent a car
 - Check the list of transactions for a particular category
 - Display the total amount of transactions for a particular category
 - write test for controllers
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LIVE DEMO -->
+
+## 🚀 Live Version <a name="live-demo"></a>
+- TBA
+
+<!-- - [Budget App](https://budget-app-mp1a.onrender.com) -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <!-- GETTING STARTED -->
 
 # 💻 Getting Started <a name="getting-started"></a>
-
 
 To get a local copy up and running, follow these steps.
 
@@ -78,6 +85,7 @@ Run this command to install **Rails**
 ```sh
  gem install rails
 ```
+
 ## Setup
 
 Clone this repository to your desired folder:
@@ -102,6 +110,7 @@ To create the database, run:
 ```sh
 rails db:create
 ```
+
 To create the schema, run:
 
 ```sh
@@ -126,6 +135,12 @@ To run tests, run the following command:
   rspec
 ```
 
+## API Documentation
+
+```sh
+  localhost:3000/api-docs
+```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- AUTHORS -->
@@ -148,9 +163,9 @@ To run tests, run the following command:
 
 # 🔭 Future Features <a name="future-features"></a>
 
-  - Create an Api so that a user can who is an owner can see the number of car sold on the app
-  - Create an Api so that a user can buy a car through the app
-  
+- Create an Api so that a user can who is an owner can see the number of car sold on the app
+- Create an Api so that a user can buy a car through the app
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
@@ -183,7 +198,8 @@ Thank you for your support and for being a part of this journey! ❤️
 
 # 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-I would like to thank: 
+I would like to thank:
+
 - Microverse
 - [https://www.behance.net/muratk](https://www.behance.net/muratk) for the original design idea
 - Code Reviewers
