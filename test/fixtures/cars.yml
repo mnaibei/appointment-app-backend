@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  car_model: MyString
+  description: MyText
+  photo: MyString
+  reservation_price: 9.99
+  user: one
+
+two:
+  car_model: MyString
+  description: MyText
+  photo: MyString
+  reservation_price: 9.99
+  user: two

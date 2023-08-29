@@ -1,0 +1,191 @@
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+tags:
+  - name: Users
+    description: Endpoints related to users
+  - name: Cars
+    description: Endpoints related to cars
+  - name: Reservations
+    description: Endpoints related to reservations
+paths:
+  "/users/{user_id}/cars":
+    parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+    get:
+      summary: List cars for a user
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Users
+    post:
+      summary: Create car for a user
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Users
+  "/users/{user_id}/cars/{id}":
+    parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Car ID
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Show car for a user
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Users
+    delete:
+      summary: Delete car for a user
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Users
+  "/users/{user_id}/reservations":
+    parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+    get:
+      summary: List reservations for a user
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Users
+    post:
+      summary: Create reservation for a user
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Users
+  "/users/{user_id}/reservations/{id}":
+    parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Reservation ID
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Show reservation for a user
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Users
+    delete:
+      summary: Delete reservation for a user
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Users
+  "/cars":
+    get:
+      summary: List all cars
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Cars
+  "/users/{user_id}/cars/{car_id}/reservations":
+    parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+      - name: car_id
+        in: path
+        description: Car ID
+        required: true
+        schema:
+          type: string
+    get:
+      summary: List reservations for a car
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Cars
+        - Reservations
+    post:
+      summary: Create reservation for a car
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Cars
+        - Reservations
+  "/users/{user_id}/cars/{car_id}/reservations/{id}":
+    parameters:
+      - name: user_id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+      - name: car_id
+        in: path
+        description: Car ID
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Reservation ID
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Show reservation for a car
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Cars
+        - Reservations
+    delete:
+      summary: Delete reservation for a car
+      responses:
+        "200":
+          description: Successful
+      tags:
+        - Cars
+        - Reservations
+servers:
+  - url: https://{defaultHost}
+    variables:
+      defaultHost:
+        default: www.example.com
