@@ -31,6 +31,13 @@
 
 **Appointment app Back-end ** is an api only app for creating APIs to be used in the front-end so that a user who is the owner can add cars to their dashboard and a user who is a renter can reserve for rent
 
+# [Kanban Board Link](https://github.com/users/mnaibei/projects/7)
+# [Kanban Screenshot](./kanban%20screen%20shot/backend-kanban.png)
+
+- We are a team of 4 for this project.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 # 🛠 Built With <a name="built-with"></a>
 
 ## 📌 Tech Stack <a name="tech-stack"></a>
